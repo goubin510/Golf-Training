@@ -7,8 +7,8 @@ var express = require('express'),
   
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/express', { useNewUrlParser: true }); 
-// mongoose.connect('mongodb://username:password@host:port/database?options...');
+// mongoose.connect('mongodb://localhost:27017/express', { useNewUrlParser: true }); 
+mongoose.connect('mongodb+srv://Admin:AdminAccess@onlinedata-xzwiw.mongodb.net/test?retryWrites=true', { useNewUrlParser: true });
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
