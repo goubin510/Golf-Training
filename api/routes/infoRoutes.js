@@ -13,3 +13,12 @@ module.exports = function(app) {
     .put(info.update)
     .delete(info.delete);
 };
+
+
+
+
+
+// Download request
+// app.get('/dl', function (req, res) {
+// 	res.download('./api/views/Home.pug ')
+// })
