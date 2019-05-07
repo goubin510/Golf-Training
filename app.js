@@ -22,6 +22,8 @@ mongoose.connect('mongodb+srv://Admin:AdminAccess@onlinedata-xzwiw.mongodb.net/t
 //Pug set up
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'api/views'));
+app.use("/scripts", express.static(__dirname + "/api/views/scripts"));
+app.use("/styles", express.static(__dirname + "/api/views/styles"));
 
 //home set up
 app.get('/', function (req, res) {
