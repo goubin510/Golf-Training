@@ -30,7 +30,9 @@ app.get('/', function (req, res) {
 
 //api routes Add
 var routes = require('./api/routes/infoRoutes'); //importing route
+var routesBis = require('./api/routes/testRoutes'); //importing route
 routes(app); //register the route
+routesBis(app);
 
 
 // Error management
