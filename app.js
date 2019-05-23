@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 // mongoose connection set up
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb+srv://Admin:AdminAccess@onlinedata-xzwiw.mongodb.net/test?retryWrites=true', { useNewUrlParser: true });
+mongoose.connect('mongodb://Admin:adminAccess1@ds261136.mlab.com:61136/heroku_wmnk4067', { useNewUrlParser: true });
 
 //ML preparation
 var MyWinnow = limdu.classifiers.Winnow.bind(0, {retrain_count: 10});
