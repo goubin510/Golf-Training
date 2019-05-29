@@ -5,7 +5,7 @@ var express = require('express'),
 	port = process.env.PORT || 3000,
 	bodyParser = require('body-parser'),
 
-	limdu = require('limdu'),
+	brain = require('brain.js'),
 	mongoose = require('mongoose'),
 	Task = require('./api/models/infoModel'), //created model loading here
 
@@ -21,22 +21,27 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://Admin:adminAccess1@ds261136.mlab.com:61136/heroku_wmnk4067', { useNewUrlParser: true });
 
 //ML preparation
-var MyWinnow = limdu.classifiers.Winnow.bind(0, {retrain_count: 10});
-var intentClassifier = new limdu.classifiers.multilabel.BinaryRelevance({
-	binaryClassifierType: MyWinnow
-});
+const net = new brain.NeuralNetwork();
+net.train([
+	{ input: {l:0}, output: { Fairway: 1 } },
+	{ input: {l:1}, output: { Rough: 1 } },
+	{ input: {l:2}, output: { Bunker: 1 } }
+]
+// ,{
+// 	log: detail => console.log(detail)
+// }
+);
 
-intentClassifier.trainBatch([
-  { input: {d:7, D:10, l:0}, output: "Exercie 1"},
-  { input: {d:15, D:20, l:0}, output: "Exercie 2"},
-  { input: {d:4, D:15, l:0}, output: "Exercie 3"},
-  { input: {d:10, D:15, l:0}, output: "Exercie 4"},
-  { input: {d:15, D:30, l:0}, output: "Exercie 5"},
-  { input: {d:15, D:50, l:0}, output: "Exercie 6"},
-  { input: {d:10, D:15, l:1}, output: "Exercie 7"},
-  { input: {d:3, D:10, l:2}, output: "Exercie 8"},
-  { input: {d:10, D:25, l:2}, output: "Exercie 9"}
-]);
+  // { input: {d:7, D:10, l:0}, output: "Exercie 1"},
+  // { input: {d:15, D:20, l:0}, output: "Exercie 2"},
+  // { input: {d:4, D:15, l:0}, output: "Exercie 3"},
+  // { input: {d:10, D:15, l:0}, output: "Exercie 4"},
+  // { input: {d:15, D:30, l:0}, output: "Exercie 5"},
+  // { input: {d:15, D:50, l:0}, output: "Exercie 6"},
+  // { input: {d:10, D:15, l:1}, output: "Exercie 7"},
+  // { input: {d:3, D:10, l:2}, output: "Exercie 8"},
+  // { input: {d:10, D:25, l:2}, output: "Exercie 9"}
+
 
 //Pug set up
 app.set('view engine', 'pug');
@@ -52,8 +57,11 @@ app.get('/', function (req, res) {
 //for testing purpose
 app.post('/test',function (req, res) {
 	console.log(req.body.d, req.body.D, req.body.l);
+	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 
-	res.send({text: "Sorry, I can't tell", exo: 0})
+	var plop = net.run({l: req.body.l});
+
+	res.send({text: "Sorry, I can't tell", Lie: plop})
 })
 
 //api routes Add
